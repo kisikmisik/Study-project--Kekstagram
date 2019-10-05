@@ -1,5 +1,8 @@
 'use strict';
 
+var fragment = document.createDocumentFragment();
+var photoNumber = 1;
+
 var getComment = function () {
   var commentImg = 'photos/' + Math.floor((Math.random() * 5) + 1) + '.jpg';
   var comments = [
@@ -24,10 +27,12 @@ var getComment = function () {
     message: comments[Math.floor(Math.random() * comments.length)],
     name: names[Math.floor(Math.random() * names.length)]
   }
-}
+};
+
 
 var getPictureData = function () {
-  var photoUrl = 'photos/' + Math.floor((Math.random() * 24) + 1) + '.jpg';
+  var photoUrl = 'photos/' + photoNumber + '.jpg';
+
   var photoLikes = Math.floor((Math.random() * 235) + 15);
 
   return {
@@ -36,19 +41,35 @@ var getPictureData = function () {
     likes: photoLikes,
     comments: getComment()
   }
-}
+};
 
 var posts = [];
 var pictures = document.querySelector('.pictures');
 var template = document.querySelector('#picture').content.querySelector('.picture');
 
+var getHtml = function (data) {
+
+    posts.push(getPictureData());
+
+    var picture = template.cloneNode(true);
+    picture.querySelector('.picture__img').src = data.url;
+    picture.querySelector('.picture__likes').textContent = data.likes;
+    picture.querySelector('.picture__comments').textContent = data.comments;
+
+    pictures.appendChild(picture);
+
+};
 
 for (var i = 0; i < 25; i++) {
-  posts.push(getPictureData());
+  getHtml(getPictureData());
+  photoNumber++;
+};
 
-  var picture = template.cloneNode(true);
-  console.log(picture.querySelector('.picture__img'));
-}
+
+
+
+
+
 
 
 
