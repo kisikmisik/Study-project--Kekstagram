@@ -5,9 +5,10 @@ var photoNumber = 1;
 
 var bigPicture = document.querySelector('.big-picture');
 
-bigPicture.classList.remove('hidden');
+//bigPicture.classList.remove('hidden');
 document.querySelector('.social__comment-count').classList.add('visually-hidden');
 document.querySelector('.comments-loader').classList.add('visually-hidden');
+
 
 var comments = [
   'Всё отлично!',
@@ -30,6 +31,18 @@ var names = [
 var posts = [];
 var pictures = document.querySelector('.pictures');
 var template = document.querySelector('#picture').content.querySelector('.picture');
+
+var editPopup = document.querySelector('.img-upload__overlay');
+var uploadButton = document.querySelector('#upload-file');
+var closeEdit = document.querySelector('#upload-cancel');
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
+var previewPic = document.querySelector('.img-upload__preview img');
+
+var sliderPin = document.querySelector('.effect-level__pin');
+var fullDoc = document.querySelector('body');
+var sliderPinLine = document.querySelector('.effect-level__depth');
+var slider = document.querySelector('.effect-level');
 
 // Создает обьект комментария
 var getComment = function () {
@@ -99,8 +112,155 @@ var getAllPhotos = function () {
   }
 };
 
+var getPinDefault = function () {
+  sliderPin.style.left = '100%';
+  sliderPinLine.style.width = '100%';
+  slider.style = 'visibility: visible';
+}
+
+var getScaleDefault = function () {
+  previewPic.style.transform = 'scale(1)';
+  scaleValue.value = '100%';
+}
+
+var getPreviewDefault = function () {
+  previewPic.className = 'effects__preview--none';
+  slider.style = 'visibility: hidden';
+  previewPic.style.filter = 'none';
+}
+
 getBigImageInfo(getPictureData());
 getAllPhotos();
+
+uploadButton.addEventListener('change', function (evt) {
+  editPopup.classList.remove('hidden');
+});
+
+closeEdit.addEventListener('click', function (evt) {
+  editPopup.classList.add('hidden');
+});
+
+document.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    editPopup.classList.add('hidden');
+    document.querySelector('.img-upload__form').reset();
+    getPreviewDefault();
+  }
+});
+
+var chromeEffect = document.querySelector('#effect-chrome');
+chromeEffect.addEventListener('click', function (evt) {
+  previewPic.className = 'effects__preview--chrome';
+  previewPic.style.filter = 'grayscale(100%)';
+  getPinDefault();
+});
+
+var sepiaEffect = document.querySelector('#effect-sepia');
+sepiaEffect.addEventListener('click', function (evt) {
+  previewPic.className = 'effects__preview--sepia';
+  previewPic.style.filter = 'sepia(100%)';
+  getPinDefault();
+});
+
+var marvinEffect = document.querySelector('#effect-marvin');
+marvinEffect.addEventListener('click', function (evt) {
+  previewPic.className = 'effects__preview--marvin';
+  previewPic.style.filter = 'invert(100%)';
+  getPinDefault();
+});
+
+var phobosEffect = document.querySelector('#effect-phobos');
+phobosEffect.addEventListener('click', function (evt) {
+  previewPic.className = 'effects__preview--phobos';
+  previewPic.style.filter = 'blur(3px)';
+  getPinDefault();
+});
+
+var heatEffect = document.querySelector('#effect-heat');
+heatEffect.addEventListener('click', function (evt) {
+  previewPic.className = 'effects__preview--heat';
+  previewPic.style.filter = 'brightness(3)';
+  getPinDefault();
+});
+
+var originEffect = document.querySelector('#effect-none');
+originEffect.addEventListener('click', function (evt) {
+  getPreviewDefault();
+});
+
+slider.addEventListener('mouseup', function (evt) {
+  var sliderWidth = document.querySelector('.effect-level__line').offsetWidth;
+  var sliderStart = fullDoc.offsetWidth / 2 - sliderWidth / 2;
+  var sliderEnd = fullDoc.offsetWidth / 2 + sliderWidth / 2;
+  if (evt.clientX >= sliderStart && evt.clientX <= sliderEnd) {
+    var pinProcent = Math.floor((evt.clientX - sliderStart) / sliderWidth * 100);
+    sliderPin.style.left = pinProcent + '%';
+    sliderPinLine.style.width = pinProcent + '%';
+
+    if (previewPic.classList.contains('effects__preview--chrome')) {
+      var filterGray = 'grayscale(' + pinProcent + '%)';
+      previewPic.style.filter = filterGray;
+    } else if (previewPic.classList.contains('effects__preview--sepia')) {
+      var filterSepia = 'sepia(' + pinProcent + '%)';
+      previewPic.style.filter = filterSepia;
+    } else if (previewPic.classList.contains('effects__preview--marvin')) {
+      var filterInvert = 'invert(' + pinProcent + '%)';
+      previewPic.style.filter = filterInvert;
+    } else if (previewPic.classList.contains('effects__preview--phobos')) {
+      var blurValue = pinProcent / 100 * 3;
+      var filterBlur = 'blur(' + blurValue + 'px)';
+      previewPic.style.filter = filterBlur;
+    } else if (previewPic.classList.contains('effects__preview--heat')) {
+      var heatValue = pinProcent / 100 * 2 + 1;
+      var filterHeat = 'brightness(' + heatValue + ')';
+      previewPic.style.filter = filterHeat;
+    }
+  }
+});
+
+var scaleSmaller = document.querySelector('.scale__control--smaller');
+var scaleBigger = document.querySelector('.scale__control--bigger');
+var scaleValue = document.querySelector('.scale__control--value');
+
+getScaleDefault();
+
+var scaleStep = 25;
+
+scaleSmaller.addEventListener('click', function (evt) {
+  if (parseInt(scaleValue.value, 10) > 0) {
+  scaleValue.value = parseInt(scaleValue.value, 10) - scaleStep + '%';
+  previewPic.style.transform = 'scale(' + parseInt(scaleValue.value, 10) / 100 + ')';
+  }
+});
+
+scaleBigger.addEventListener('click', function (evt) {
+  if (parseInt(scaleValue.value, 10) < 100) {
+  scaleValue.value = parseInt(scaleValue.value, 10) + scaleStep + '%';
+  previewPic.style.transform = 'scale(' + parseInt(scaleValue.value, 10) / 100 + ')';
+  }
+});
+
+var hashInput = document.querySelector('.text__hashtags');
+
+hashInput.addEventListener('keydown', function (evt) {
+  evt.stopPropagation();
+});
+
+hashInput.addEventListener('input', function (evt) {
+  if (hashInput.validity.tooShort) {
+    hashInput.setCustomValidity('Ты ебаный лох');
+  } else {
+    hashInput.setCustomValidity('');
+  }
+  console.log(hashInput.validity.tooShort);
+});
+
+
+
+
+
+
+
 
 
 
