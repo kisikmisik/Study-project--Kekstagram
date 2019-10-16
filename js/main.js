@@ -241,26 +241,56 @@ scaleBigger.addEventListener('click', function (evt) {
 });
 
 var hashInput = document.querySelector('.text__hashtags');
+var inputValue = hashInput.value;
+var inputPattern = document.querySelector('.text__hashtags').pattern;
+var patHtml = '[&#x23;]{1}[A-Za-zА-Яа-яЁё]{1,19}';
+
+var getInputValidity = function () {
+  var hashArray = document.querySelector('.text__hashtags').value.split(" ");
+  if (hashArray.length === 1) {
+    document.querySelector('.text__hashtags').pattern = patHtml;
+  }
+  if (hashArray.length === 2) {
+    document.querySelector('.text__hashtags').pattern = patHtml + ' ' + patHtml;
+  }
+  if (hashArray.length === 3) {
+    document.querySelector('.text__hashtags').pattern = patHtml + ' ' + patHtml + ' ' + patHtml;
+  }
+  if (hashArray.length === 4) {
+    document.querySelector('.text__hashtags').pattern =
+    patHtml + ' ' + patHtml + ' ' + patHtml + ' ' + patHtml;
+  }
+  if (hashArray.length === 5) {
+    document.querySelector('.text__hashtags').pattern =
+    patHtml + ' ' + patHtml + ' ' + patHtml + ' ' + patHtml + ' ' + patHtml;
+  }
+
+  var isSame = function (element, index, array) {
+    return (element === hashArray[i]);
+  }
+
+  if (!hashInput.value.match(/[&#x23;]/g)) {
+    hashInput.setCustomValidity("Укажи хэштег первым символом");
+  } else {
+    hashInput.setCustomValidity("");
+  }
+
+  for (var i = 0; i < hashArray.length; i++) {
+    if (hashArray.every(isSame)) {
+      if (hashArray.length > 1) {
+        hashInput.setCustomValidity("Нельзя указывать одинаковые хештеги");
+      }
+    } else {
+      hashInput.setCustomValidity("");
+    }
+  }
+}
+
+hashInput.addEventListener('input', function () {
+  getInputValidity();
+});
 
 hashInput.addEventListener('keydown', function (evt) {
   evt.stopPropagation();
 });
-
-hashInput.addEventListener('input', function (evt) {
-  if (hashInput.validity.tooShort) {
-    hashInput.setCustomValidity('Ты ебаный лох');
-  } else {
-    hashInput.setCustomValidity('');
-  }
-  console.log(hashInput.validity.tooShort);
-});
-
-
-
-
-
-
-
-
-
 
