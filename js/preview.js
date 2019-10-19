@@ -1,7 +1,6 @@
 (function (data) {
 
 window.editPopup = document.querySelector('.img-upload__overlay');
-var sliderPin = document.querySelector('.effect-level__pin');
 var previewPic = document.querySelector('.img-upload__preview img');
 var closeEdit = document.querySelector('#upload-cancel');
 var slider = document.querySelector('.effect-level');
@@ -104,14 +103,23 @@ scaleBigger.addEventListener('click', function (evt) {
   }
 });
 
-slider.addEventListener('mouseup', function (evt) {
+var sliderPin = document.querySelector('.effect-level__pin');
+
+var sliderOnClick = function (evt) {
+
+  };
+
+sliderPin.addEventListener('mousedown', function (evt) {
   var sliderWidth = document.querySelector('.effect-level__line').offsetWidth;
   var sliderStart = fullDoc.offsetWidth / 2 - sliderWidth / 2;
   var sliderEnd = fullDoc.offsetWidth / 2 + sliderWidth / 2;
-  if (evt.clientX >= sliderStart && evt.clientX <= sliderEnd) {
-    var pinProcent = Math.floor((evt.clientX - sliderStart) / sliderWidth * 100);
-    sliderPin.style.left = pinProcent + '%';
-    sliderPinLine.style.width = pinProcent + '%';
+
+  var startCoords = {
+    x: evt.clientX
+  };
+
+  var onMouseMove = function (moveEvt) {
+    var pinProcent = Math.floor((moveEvt.clientX - sliderStart) / sliderWidth * 100);
 
     if (previewPic.classList.contains('effects__preview--chrome')) {
       var filterGray = 'grayscale(' + pinProcent + '%)';
@@ -131,7 +139,30 @@ slider.addEventListener('mouseup', function (evt) {
       var filterHeat = 'brightness(' + heatValue + ')';
       previewPic.style.filter = filterHeat;
     }
-  }
+
+    var shift = {
+      x: startCoords.x - moveEvt.clientX
+    };
+
+    startCoords = {
+      x: moveEvt.clientX
+    };
+
+    if (moveEvt.clientX > sliderStart && moveEvt.clientX < sliderEnd) {
+       sliderPin.style.left = (sliderPin.offsetLeft - shift.x) + 'px';
+       sliderPinLine.style.width = (sliderPin.offsetLeft - shift.x) + 'px';
+    }
+  };
+
+  var onMouseUp = function (evt) {
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+  };
+
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
 });
+
+
 
 })(data);
