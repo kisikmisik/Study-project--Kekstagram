@@ -34,7 +34,7 @@ closeEdit.addEventListener('click', function (evt) {
 });
 
 document.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === data.ESC_KEYCODE) {
+  if (evt.keyCode === gallery.ESC_KEYCODE) {
     editPopup.classList.add('hidden');
     document.querySelector('.img-upload__form').reset();
     getPreviewDefault();

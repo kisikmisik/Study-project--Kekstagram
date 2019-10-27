@@ -31,17 +31,19 @@ var successHandler = function (images) {
 };
 
 var errorHandler = function (errorMessage) {
-  var node = document.createElement('div');
-  node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
-  node.style.position = 'absolute';
-  node.style.left = 0;
-  node.style.right = 0;
-  node.style.fontSize = '30px';
+  var errorTemplate = document.querySelector('#error').content;
+  var errorElement = errorTemplate.cloneNode(true);
+  var errorTryAgain = errorElement.querySelector('.error__button:nth-child(1)');
+  var errorTryNewPhoto = errorElement.querySelector('.error__button:nth-child(2)');
 
-  node.textContent = errorMessage;
-  document.body.insertAdjacentElement('afterbegin', node);
+  errorElement.querySelector('.error__title').textContent = 'Ошибка загрузки фотографий';
+  errorTryNewPhoto.style = 'display: none';
+  document.querySelector('main').appendChild(errorElement);
+
+  errorTryAgain.addEventListener('click', function () {
+    location.reload();
+  });
 };
-
 
 window.load(successHandler, errorHandler);
 
