@@ -1,6 +1,6 @@
 (function (gallery) {
 
-window.editPopup = document.querySelector('.img-upload__overlay');
+var editPopup = document.querySelector('.img-upload__overlay');
 var previewPic = document.querySelector('.img-upload__preview img');
 var closeEdit = document.querySelector('#upload-cancel');
 var slider = document.querySelector('.effect-level');
@@ -25,11 +25,18 @@ var getPreviewDefault = function () {
   previewPic.style.filter = 'none';
 }
 
+var getDefault = function () {
+  getPinDefault();
+  getScaleDefault();
+  getPreviewDefault();
+}
+
 uploadButton.addEventListener('change', function (evt) {
   editPopup.classList.remove('hidden');
 });
 
 closeEdit.addEventListener('click', function (evt) {
+  getDefault();
   editPopup.classList.add('hidden');
 });
 
@@ -85,7 +92,9 @@ var scaleSmaller = document.querySelector('.scale__control--smaller');
 var scaleBigger = document.querySelector('.scale__control--bigger');
 var scaleValue = document.querySelector('.scale__control--value');
 
-getScaleDefault();
+document.querySelector('.img-upload__label').addEventListener('click', function () {
+   getScaleDefault();
+});
 
 var scaleStep = 25;
 
@@ -159,6 +168,11 @@ sliderPin.addEventListener('mousedown', function (evt) {
   document.addEventListener('mousemove', onMouseMove);
   document.addEventListener('mouseup', onMouseUp);
 });
+
+window.preview = {
+  getDefault: getDefault,
+  editPopup: editPopup
+}
 
 
 
