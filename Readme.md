@@ -1,52 +1,24 @@
-# Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
-* Студент: [Петр Петров](https://up.htmlacademy.ru/javascript/18/user/632047).
-* Наставник: `Неизвестно`.
+## Kekstagram, upload and edit your image
 
----
+### Description:
 
-_Не удаляйте и не обращайте внимание на файлы:_<br>
-_`.editorconfig`, `.eslintrc`, `.gitattributes`, `.gitignore`, `.travis.yml`, `package-lock.json`, `package.json`._
+This was a last training project made as part of the front end developer course at htmlacademy.ru
 
----
+### Functionality:
 
-### Памятка
+- you can see uploaded images, count of likes, comments;</br>
+- possibility to upload your image, apply one of the available filters to it, control the saturation;</br>
+- change the scale of the image, write hashtags and description to it;</br>
 
-#### 1. Зарегистрируйтесь на Гитхабе
+### Technologies and libraries used:
 
-Если у вас ещё нет аккаунта на [github.com](https://github.com/join), скорее зарегистрируйтесь.
+- JavaScript (mostly ES5);
+- HTML5 (semantic);
+- LESS (BEM);
+- Gulp.
 
-#### 2. Создайте форк
+### How to try:
 
-Откройте репозиторий и нажмите кнопку «Fork» в правом верхнем углу. Репозиторий из Академии будет скопирован в ваш аккаунт.
+1) Direct link - https://kisikmisik.github.io/Study-project--Kekstagram
 
-<img width="769" alt="" src="https://user-images.githubusercontent.com/10909/35275222-1d624452-0050-11e8-8aca-06d2832724ce.png">
-
-Получится вот так:
-
-<img width="769" alt="" src="https://user-images.githubusercontent.com/10909/35275223-1d7cf9fa-0050-11e8-829b-98ac3c9a4f8b.png">
-
-#### 3. Клонируйте репозиторий на свой компьютер
-
-Будьте внимательны: нужно клонировать свой репозиторий (форк), а не репозиторий Академии. Также обратите внимание, что клонировать репозиторий нужно через SSH, а не через HTTPS. Нажмите зелёную кнопку в правой части экрана, чтобы скопировать SSH-адрес вашего репозитория:
-
-<img width="769" alt="" src="https://user-images.githubusercontent.com/10909/35275224-1d97a7dc-0050-11e8-89f9-41c9a7b2ae9c.png">
-
-Клонировать репозиторий можно так:
-
-```
-git clone SSH-адрес_вашего_форка
-```
-
-Команда клонирует репозиторий на ваш компьютер и подготовит всё необходимое для старта работы.
-
-#### 4. Начинайте обучение!
-
----
-
-<a href="https://htmlacademy.ru/intensive/javascript"><img align="left" width="50" height="50" alt="HTML Academy" src="https://up.htmlacademy.ru/static/img/intensive/javascript/logo-for-github-2.png"></a>
-
-Репозиторий создан для обучения на интенсивном онлайн‑курсе «[Профессиональный JavaScript](https://htmlacademy.ru/intensive/javascript)», уровень 1 от [HTML Academy](https://htmlacademy.ru).
-
-[travis-image]: https://travis-ci.com/htmlacademy-javascript/632047-kekstagram-18.svg?branch=master
-[travis-url]: https://travis-ci.com/htmlacademy-javascript/632047-kekstagram-18
